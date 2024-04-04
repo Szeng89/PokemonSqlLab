@@ -1,12 +1,24 @@
 What are all the types of pokemon that a pokemon can have? // SELECT name AS Types from types;
+
 What is the name of the pokemon with id 45? // SELECT name FROM pokemons WHERE id = 45;
+
 How many pokemon are there? // SELECT COUNT(id) AS NumberOfPokemon FROM pokemons;
+
 How many types are there? // SELECT COUNT(id) AS NumberOfTypes FROM types;
+
 How many pokemon have a secondary type? // SELECT COUNT(name) AS WithSecondType From pokemons WHERE secondary_type IS NOT NULL;
-What is each pokemon's primary type? // SELECT name, primary_type FROM pokemons;
-What is Rufflet's secondary type? //
-What are the names of the pokemon that belong to the trainer with trainerID 303?
+
+What is each pokemon's primary type? // SELECT pokemons.name AS PokemonName, types.name AS Type FROM pokemons LEFT JOIN types ON pokemons.primary_type = types.id;
+
+What is Rufflet's secondary type? // Select pokemons.name AS Pokemon, types.name AS Type From pokemons Left Join types On pokemons.secondary_type=types.id
+                                         -> Where pokemons.name = 'Rufflet';
+
+What are the names of the pokemon that belong to the trainer with trainerID 303?// Select pokemon_trainer.trainerID AS Trainer, pokemons.name AS Pokemon From pokemons Right Join pokemon_trainer ON pokemons.id = pokemon_trainer.trainerID where pokemon_trainer.trainerID = 303;
+
 How many pokemon have a secondary type Poison
+
 What are all the primary types and how many pokemon have that type?
+
 How many pokemon at level 100 does each trainer with at least one level 100 pokemone have? (Hint: your query should not display a trainer
+
 How many pokemon only belong to one trainer and no other?
