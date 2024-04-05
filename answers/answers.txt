@@ -24,6 +24,7 @@ How many pokemon at level 100 does each trainer with at least one level 100 poke
 
 
 How many pokemon only belong to one trainer and no other?
+SELECT Count(*) AS HowManyPokemonThatOnly1TrainerHas FROM (SELECT COUNT(pokemons.id) FROM pokemons Left Join pokemon_trainer ON pokemon_trainer.pokemon_id = pokemons.id Group by pokemons.id HAVING Count(pokemon_trainer.pokemon_id) = 1) AS lasttable;
 
 
 
@@ -33,3 +34,42 @@ Where pokemons.secondary_type = 7
 SELECT types.name From types Left join pokemons On pokemons.primary_type = types.id Group by Count();
 
 Select types.name, COUNT(pokemons.primary_type) as NumberOfEachType From pokemons Left join types ON types.id = pokemons.primary_type Group By types;
+
+
+SELECT COUNT(*) AS AmountOfPokemonOnlyBelongingToOne
+    FROM pokemons
+    JOIN pokemon_trainer ON pokemon_trainer.pokemon_id = pokemons.id
+    GROUP BY pokemons.id
+    HAVING COUNT(pokemon_trainer.pokemons_id) = 1
+) AS FilteredPokemons;
+
+SELECT COUNT(pokemons.id) AS AmountOfPokemonOnlyBelongingToOne
+ FROM pokemons
+ Left Join pokemon_trainer ON pokemon_trainer.pokemon_id = pokemons.id
+ Group by pokemons.id
+ HAVING Count(pokemon_trainer.pokemon_id) = 1;
+
+ Select Count(*)(SELECT COUNT(pokemons.id) AS AmountOfPokemonOnlyBelongingToOne FROM pokemons Left Join pokemon_trainer ON pokemon_trainer.pokemon_id = pokemons.id Group by pokemons.id HAVING Count(pokemon_trainer.pokemon_id) = 1);
+
+SELECT Count(*) FROM (SELECT COUNT(pokemons.id) AS AmountOfPokemonOnlyBelongingToOne FROM pokemons Left Join pokemon_trainer ON pokemon_trainer.pokemon_id = pokemons.id Group by pokemons.id HAVING Count(pokemon_trainer.pokemon_id) = 1) AS lasttable;
+
+
+
+
+PART4
+select
+p.name AS "Pokemon's name",
+trainers.trainername AS "Trainer's name",
+pokemon_trainer.pokelevel AS "Current Level",
+pt.name AS "Primary Type Name",
+st.name AS "Secondary Type Name"
+from pokemons AS p
+join types as pt on p.primary_type = pt.id
+join types as st on p.secondary_type = st.id
+join pokemon_trainer on p.id = pokemon_trainer.pokemon_id
+join trainers on trainers.trainerID = pokemon_trainer.trainerID
+order by pokemon_trainer.pokelevel desc
+Limit 507;
+
+
+
